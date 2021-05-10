@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Select user to delete</title>
+</head>
+<body>
+
+<h3>Select user to delete</h3>
+
+<br/>
+
+<div th:each="user : ${users}">
+    <form th:method="DELETE"
+          th:action="@{/user/delete}"
+          th:object="${user}"
+          th:text="${user.getName()} + ' ' + ${user.getSurname()}">>
+    </form>
+</div>
+
+<!--@{/people/{id}/delete(id=${person.getId()})}-->
+
+<br/>
+
+<form action="javascript:history.back()">
+    <button>Get back</button>
+</form>
+
+</body>
+</html>

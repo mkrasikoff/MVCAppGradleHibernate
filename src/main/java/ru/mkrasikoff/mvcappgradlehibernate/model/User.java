@@ -1,12 +1,6 @@
 package ru.mkrasikoff.mvcappgradlehibernate.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.mkrasikoff.mvcappgradlehibernate.dao.UserRepository;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
