@@ -18,6 +18,12 @@
 
 <br/>
 
+<form th:method="POST" th:action="@{/user/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+<br/>
+
 <form action="/user/show">
     <button>Users list</button>
 </form>

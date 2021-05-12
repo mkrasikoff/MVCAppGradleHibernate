@@ -4,25 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.mkrasikoff.mvcappgradlehibernate.dao.UserDAO;
 import ru.mkrasikoff.mvcappgradlehibernate.dao.UserRepository;
 import ru.mkrasikoff.mvcappgradlehibernate.model.User;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDAO userDAO;
 
+    ArrayList arrayList;
     @GetMapping("/show")
     public String showAll(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userDAO.findAllUsers());
         return "user/showAll";
     }
 
     @GetMapping("/show/{id}")
     public String showUser(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userRepository.findById(id).get());
+        model.addAttribute("user", userDAO.findUserById(id));
         return "user/showUser";
     }
 
@@ -34,19 +38,13 @@ public class UserController {
 
     @PostMapping("/add")
     public String addUser(@ModelAttribute("user") User user) {
-        userRepository.save(user);
-        return "/welcomePage";
+        userDAO.save(user);
+        return "redirect:/user/show";
     }
 
-    @GetMapping("/delete")
-    public String deleteUserPage(Model model) {
-        model.addAttribute("users", userRepository.findAll());
-        return "user/deleteUser";
-    }
-
-    @DeleteMapping("/delete")
-    public @ResponseBody String deleteUser(@ModelAttribute("user") User user) {
-        userRepository.delete(user);
-        return "Deleted";
+    @PostMapping("/{id}")
+    public String deletePerson(@PathVariable("id") int id) {
+        userDAO.delete(id);
+        return "redirect:/user/show";
     }
 }
